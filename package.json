@@ -14,6 +14,15 @@
     "cookie-parser": "^1.4.7",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
-    "express-session": "^1.19.0"
-  }
+    "express-session": "^1.19.0",
+    "mongoose": "^9.10.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NITHYA191-cap/FSD-2-WORK.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NITHYA191-cap/FSD-2-WORK/issues"
+  },
+  "homepage": "https://github.com/NITHYA191-cap/FSD-2-WORK#readme"
 }

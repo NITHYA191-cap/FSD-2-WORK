@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management Portal</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .student {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-top: 12px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        .delete {
+            background-color: #d9534f;
+        }
+
+        .delete:hover {
+            background-color: #c9302c;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>Student Management Portal</h1>
+
+    <!-- Student Form -->
+
+    <form id="studentForm">
+
+        <div class="form-group">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter student name"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <input
+                type="text"
+                id="rollNumber"
+                placeholder="Enter roll number"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <input
+                type="text"
+                id="course"
+                placeholder="Enter course"
+                required
+            >
+
+        </div>
+
+
+        <button type="submit">
+            Add Student
+        </button>
+
+    </form>
+
+
+    <h2>Active Enrollments</h2>
+
+    <div id="studentList">
+
+        <% students.forEach(student => { %>
+
+            <div class="student">
+
+                <div>
+
+                    <strong>
+                        <%= student.name %>
+                    </strong>
+
+                    <br>
+
+                    Roll Number:
+                    <%= student.rollNumber %>
+
+                    <br>
+
+                    Course:
+                    <%= student.course %>
+
+                </div>
+
+
+                <button
+                    class="delete"
+                    onclick="deleteStudent('<%= student._id %>')"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</div>
+
+
+<script>
+
+// ==========================================
+// CREATE - Add Student
+// ==========================================
+
+document
+    .getElementById("studentForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const studentData = {
+
+            name: document
+                .getElementById("name")
+                .value,
+
+            rollNumber: document
+                .getElementById("rollNumber")
+                .value,
+
+            course: document
+                .getElementById("course")
+                .value
+        };
+
+
+        const response = await fetch("/students", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(studentData)
+
+        });
+
+
+        if (response.ok) {
+
+            alert("Student added successfully!");
+
+            location.reload();
+
+        } else {
+
+            alert("Error adding student.");
+
+        }
+
+    });
+
+
+// ==========================================
+// DELETE - Delete Student
+// ==========================================
+
+async function deleteStudent(id) {
+
+    const response = await fetch(
+        "/students/" + id,
+        {
+            method: "DELETE"
+        }
+    );
+
+
+    if (response.ok) {
+
+        alert("Student deleted successfully!");
+
+        location.reload();
+
+    } else {
+
+        alert("Error deleting student.");
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
