@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -12,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 // MongoDB Atlas connection
-const dbURI = "mongodb+srv://allurisrinithya_db_user:214236@cluster0.flht4xa.mongodb.net/?appName=Cluster0";
+const dbURI = process.env.MONGODB_URI
 
 mongoose
   .connect(dbURI)
